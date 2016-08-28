@@ -64,9 +64,11 @@ def main():
                               discoveryServiceUrl=discoveryUrl)
 
     spreadsheetId = '1fC9qVoGq6FHm50-gfuugH9wnyYd47Ls3ep3z7HBvOPY'
-    rangeName = 'Schedule!A2:M'
+    rangeName = 'Schedule!A1:M'
     result = service.spreadsheets().values().get(
         spreadsheetId=spreadsheetId, range=rangeName).execute()
+
+    labels = result['values'].pop(0)
     values = result.get('values', [])
 
     now = datetime.date.today()
@@ -83,11 +85,19 @@ def main():
                 if row[0] != '':
                     d = datetime.datetime.strptime(row[0], '%m/%d/%Y')
                     if(str(nextSunday) in str(d)):
-                        schedule[row[0]] = {'preacher': row[1], 'translator': row[2]}
-
-        print schedule
+                        reformattedDate = d.strftime("%Y%m%d")
+                        for i in range(len(row)):
+                            if reformattedDate not in schedule:
+                                schedule[reformattedDate] = {}
+                            schedule[reformattedDate][labels[i]] = row[i]
+    for date in schedule:
+        for title in schedule[date]:
+            print title + ": " + schedule[date][title]
             # Print columns A and E, which correspond to indices 0 and 4.
             #print('%s, %s' % (row[1], row[2]))
 
 if __name__ == "__main__":
     main()
+
+
+# yyyymmdd
