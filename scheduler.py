@@ -1,8 +1,5 @@
 #from __future__ import print_function
 
-import sys
-sys.path.insert(0, 'libs')
-
 import httplib2
 import os
 
@@ -41,8 +38,10 @@ class Scheduler():
         """
         home_dir = os.path.expanduser('~')
         credential_dir = os.path.join(home_dir, '.credentials')
-        if not os.path.exists(credential_dir):
-            os.makedirs(credential_dir)
+        # This has to be commented out because google cloud platform has
+        # deprecated filesystem access
+        #if not os.path.exists(credential_dir):
+        #    os.makedirs(credential_dir)
         credential_path = os.path.join(credential_dir,
                                        'sheets.googleapis.com-python-quickstart.json')
 

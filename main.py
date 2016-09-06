@@ -127,7 +127,7 @@ class WebhookHandler(webapp2.RequestHandler):
                 img.save(output, 'JPEG')
                 reply(img=output.getvalue())
             elif text == '/schedule' or text == '/schedule@theRejectedBot':
-                # sched = Scheduler().schedule
+                # sched = scheduler.Scheduler().schedule
                 # schedMsg = ""
                 # for date in sched:
                 #             for title in sched[date]:
