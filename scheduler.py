@@ -1,4 +1,8 @@
 #from __future__ import print_function
+
+import sys
+sys.path.insert(0, 'libs')
+
 import httplib2
 import os
 
