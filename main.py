@@ -14,6 +14,8 @@ from google.appengine.api import urlfetch
 from google.appengine.ext import ndb
 import webapp2
 
+import scheduler
+
 
 TOKEN = '242285410:AAEQF2a5sck-9cvL2e6uiAEy_alDPcR3AB4'
 
