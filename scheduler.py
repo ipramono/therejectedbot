@@ -10,21 +10,22 @@ from oauth2client import tools
 import datetime
 
 class Scheduler():
+
     def __init__(self):
         self.schedule = {}
+        # If modifying these scopes, delete your previously saved credentials
+        # at ~/.credentials/sheets.googleapis.com-python-quickstart.json
+        self.SCOPES = 'https://www.googleapis.com/auth/spreadsheets.readonly'
+        self.CLIENT_SECRET_FILE = 'client_secret.json'
+        self.APPLICATION_NAME = 'ccc-therejectedbot'
+        self.flags = 0
 
         try:
             import argparse
-            flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
+            self.flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
         except ImportError:
-            flags = None
+            self.flags = None
         self.main()
-
-    # If modifying these scopes, delete your previously saved credentials
-    # at ~/.credentials/sheets.googleapis.com-python-quickstart.json
-    SCOPES = 'https://www.googleapis.com/auth/spreadsheets.readonly'
-    CLIENT_SECRET_FILE = 'client_secret.json'
-    APPLICATION_NAME = 'Google Sheets API Python Quickstart'
 
 
     def get_credentials(self):
@@ -48,10 +49,10 @@ class Scheduler():
         store = oauth2client.file.Storage(credential_path)
         credentials = store.get()
         if not credentials or credentials.invalid:
-            flow = client.flow_from_clientsecrets(CLIENT_SECRET_FILE, SCOPES)
-            flow.user_agent = APPLICATION_NAME
-            if flags:
-                credentials = tools.run_flow(flow, store, flags)
+            flow = client.flow_from_clientsecrets(self.CLIENT_SECRET_FILE, self.SCOPES)
+            flow.user_agent = self.APPLICATION_NAME
+            if self.flags:
+                credentials = tools.run_flow(flow, store, self.flags)
             else: # Needed only for compatibility with Python 2.6
                 credentials = tools.run(flow, store)
             print('Storing credentials to ' + credential_path)
