@@ -127,13 +127,13 @@ class WebhookHandler(webapp2.RequestHandler):
                 img.save(output, 'JPEG')
                 reply(img=output.getvalue())
             elif text == '/schedule' or text == '/schedule@theRejectedBot':
-                # sched = scheduler.Scheduler().schedule
-                # schedMsg = ""
-                # for date in sched:
-                #             for title in sched[date]:
-                #                 schedMsg += title + ": " + sched[date][title] + "\n"
-                # reply(schedMsg)
-                reply('Preacher: Indra Pramono\nTranslator: Bob Salim')
+                sched = scheduler.Scheduler().schedule
+                schedMsg = ""
+                for date in sched:
+                            for title in sched[date]:
+                                schedMsg += title + ": " + sched[date][title] + "\n"
+                reply(schedMsg)
+                # reply('Preacher: Indra Pramono\nTranslator: Bob Salim')
             # else:
             #     reply('What command?')
 

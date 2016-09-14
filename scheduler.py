@@ -8,8 +8,10 @@ import oauth2client
 from oauth2client import client
 from oauth2client import tools
 import datetime
+from oauth2client.client import OAuth2WebServerFlow
+import webapp2
 
-class Scheduler():
+class Scheduler(webapp2.RequestHandler):
 
     def __init__(self):
         self.schedule = {}
@@ -59,14 +61,21 @@ class Scheduler():
         return credentials
 
     def main(self):
-        credentials = self.get_credentials()
+        # credentials = self.get_credentials()
+        flow = OAuth2WebServerFlow('532839862987-grmls6uf8tfej140mf32i23qptk2n310.apps.googleusercontent.com', 'WFabmhVTNtWzzEW5-TCWQZUH', 'https://www.googleapis.com/auth/spreadsheets.readonly', 'urn:ietf:wg:oauth:2.0:oob')
+        authorize_url = flow.step1_get_authorize_url()
+        self.redirect(authorize_url)
+        # code = '4/mS6IOQVQV2aDSctWTPMkCvRvoHHF60ggO953GBj_tHM'.strip()
+        # code = raw_input('Enter verification code: ').strip()
+        credentials = flow.step2_exchange(self.request)
+
         http = credentials.authorize(httplib2.Http())
         discoveryUrl = ('https://sheets.googleapis.com/$discovery/rest?'
                         'version=v4')
         service = discovery.build('sheets', 'v4', http=http,
                                   discoveryServiceUrl=discoveryUrl)
 
-        spreadsheetId = '1fC9qVoGq6FHm50-gfuugH9wnyYd47Ls3ep3z7HBvOPY'
+        spreadsheetId = '1tG1rFftB-hthBIgCJcfMU2PhPvt_tym0wmTBQV-OvOA'
         rangeName = 'Schedule!A1:M'
         result = service.spreadsheets().values().get(
             spreadsheetId=spreadsheetId, range=rangeName).execute()
