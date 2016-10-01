@@ -67,7 +67,10 @@ class Scheduler(webapp2.RequestHandler):
         self.redirect(authorize_url)
         # code = '4/mS6IOQVQV2aDSctWTPMkCvRvoHHF60ggO953GBj_tHM'.strip()
         # code = raw_input('Enter verification code: ').strip()
-        credentials = flow.step2_exchange(self.request)
+        credentials = flow.step2_exchange('4/VZADEqdv6D5LMG16_tYsQ0jJIOo4JKRoh1FpdNyU3to')
+        # code = request.GET("code")
+        # credentials = flow.step2_exchange(code)
+
 
         http = credentials.authorize(httplib2.Http())
         discoveryUrl = ('https://sheets.googleapis.com/$discovery/rest?'
